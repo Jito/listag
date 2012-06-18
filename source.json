@@ -1,0 +1,47 @@
+[
+  {
+    label: "ActionScript",
+    value: 1,
+    customValue: null
+  },
+  {
+    label: "AppleScript",
+    value: 2,
+    customValue: 22
+  },
+  {
+    label: "Asp",
+    value: 3,
+    customValue: "string"
+  },
+  {
+    label: "BASIC",
+    value: 4,
+    customValue: true
+  },
+  {
+    label: "C",
+    value: 5,
+    customValue: null
+  },
+  {
+    label: "C++",
+    value: 6,
+    customValue: null
+  },
+  {
+    label: "Clojure",
+    value: 7,
+    customValue: 77
+  },
+  {
+    label: "COBOL",
+    value: 8,
+    customValue: "string"
+  },
+  {
+    label: "ColdFusion", 
+    value: 9, 
+    customValue: "35"
+  }
+  ]

@@ -1,0 +1,49 @@
+.size(@height: 5px, @width: 5px) {
+  height: @height;
+  width: @width;
+}
+.square(@size: 5px) {
+  .size(@size, @size);
+}
+.border-radius(@radius: 5px) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+
+.listag {
+	list-style: none;
+	margin-left: 0;
+
+	li {
+		position: relative;
+		width: 210px;
+		.border-radius(3px);
+		
+		&:not(.listag-new):hover {
+			background-color: #efefef;
+		}
+
+		&:nth-child(n+2).listag-new {
+			margin-top: 7px;
+		}
+	}
+
+	.listag-label {
+		display: inline-block;
+		padding: 5px 4px 4px;
+		margin-right: 16px;
+	}
+
+	.listag-removetag {
+		display: block;
+		.square(11px);
+		position: absolute;
+		top: 50%;
+		margin-top: -5px;
+		right: 5px;
+		text-indent: -9999em;
+		background: url(search_reset.gif) center center no-repeat;
+		cursor: pointer;
+	}
+}
