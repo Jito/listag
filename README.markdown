@@ -16,14 +16,14 @@ Features
 - Integration with Fancybox 2 plugin for showing all the posible tags in a modal window.
 - Convenient callbacks.
 
-### TODO:
+#### TODO:
 
 - JQuery UI styling conventions to enable ThemeRoller support.
 - Extend the ´fullList´ option to accept local arrays and callbacks.
 
 
 Instalation
-===========
+-----------
 
 1. Include the files in your ´head´:
 
@@ -40,9 +40,9 @@ Instalation
 
 
 Usage
-=====
+-----
 
-## Full options list
+### Full options list
 
 Option 	                 | Default     | Description
 :------------------------|:------------|:-----------
@@ -65,7 +65,7 @@ Option 	                 | Default     | Description
 ´onLimitReached´         | ´null´      | Called when limit is reached.
 
 
-## Basic usage
+### Basic usage
 
 The most basic way of get Listag working is:
 
@@ -78,7 +78,7 @@ This will create the search input and add existing ´li´ child elements as tags
 Existing ´li´ elements will be added as tags. Their text will be used as labels, and (if present) HTML5 data attributes ´data-value´ and ´data-custom-value´ (last one is only necessary if custom value option is true) will become, respectively, ´value´ and ´customValue´ properties of each tag.
 
 
-## Form friendliness
+### Form friendliness
 
 In order to use Listag within regular forms and allow tags submission, you can tell the plugin to render HTML elements.
 
@@ -94,7 +94,7 @@ Optionally, you can set ´renderHTMLTag´ as ´hidden´ and a ´<input type="hid
 Note that ´HTMLTagName´ will become the name attribute in both cases. For the hidden inputs case, though, ´[]´ will be concatenated to it **except** if the ´limit´ option is setted to 1.
 
 
-## Custom values
+### Custom values
 
 In case you need to give the user the ability to specify a custom value, you can set it as follows:
 
@@ -113,7 +113,7 @@ This time, a custom value input will be added next to the searching input and th
 If the ´renderHTMLTag´ options is set to ´hidden´, an aditional ´<input type="hidden" name="quantity[]" value="">´ will be added to each tag. If it is set to ´select´, the ´<option>´ elements will have an HTML5 ´data-custom-value´ attribute containing the custom value.
 
 
-## Showing all tag possibilities *(beta)*
+### Showing all tag possibilities *(beta)*
 
 If the autocomplete pattern isn't user-friendly enough (e.g. you've got a big list of items which the user may not remember) you can enable a *full list* button.
 
@@ -129,7 +129,7 @@ If the autocomplete pattern isn't user-friendly enough (e.g. you've got a big li
 Giving the ´fullList´ option a string, it will become the URL that must return a (full) *properly formatted* array of tags, and a *show full list* button will be added next to the search. This button will open a fancybox containing all the tags, which will be added by clicking on them.
 
 
-## Tags array format
+### Tags array format
 
 The format expected from the ´source´, ´fullList´ and ´initialTags´ options is a simple JSON array encoding:
 
@@ -153,7 +153,7 @@ You can use the public ´tag´ method for formatting purposes:
 	customarray.push(tag);
 
 
-## Extra options and callbacks
+### Extra options and callbacks
 
 ´placeholder´ and ´customValuePlaceholder´  
 For a better user experience, you can set placeholders on the search and custom value inputs, to give the user a hint of the expected content or behavior.
@@ -168,7 +168,7 @@ Maps to the autocomplete delay option. This is the time in ms between the last k
 The color used for background highlighting effect when the user tries to add a tag that already exists. If ´false´, no highlight will be applied (though this is not recommended -you should always give the user some feedback).
 
 
-### Callbacks
+#### Callbacks
 
 ´beforeAddTag´  
 It expects a ´function(event, tag)´ where ´event´ is an empty event and ´tag´ is the JSON formatted tag object. Returning ´false´ will abort the tag addition method.
