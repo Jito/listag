@@ -19,13 +19,13 @@ Features
 #### TODO:
 
 - JQuery UI styling conventions to enable ThemeRoller support.
-- Extend the ´fullList´ option to accept local arrays and callbacks.
+- Extend the `fullList` option to accept local arrays and callbacks.
 
 
 Instalation
 -----------
 
-1. Include the files in your ´head´:
+1. Include the files in your `head`:
 
 		<link rel="stylesheet" type="text/css" href="css/redmond/jquery-ui-1.8.21.custom.css">
 		<script src="js/jquery-1.7.2.min.js"></script>
@@ -46,23 +46,23 @@ Usage
 
 Option 	                 | Default     | Description
 :------------------------|:------------|:-----------
-´source´                 | ´null´      | Maps to JQuery Autocomplete UI source option.
-´limit´                  | ´0´         | Max number of tags.
-´customValue´            | ´false´     | If ´true´, a custom value input field is activated and custom values are shown in tags.
-´initialTags´            | ´[]´        | Initial array of tags. You can use public ´tag´ method to format.
-´renderHTMLTag´          | ´false´     | (´false´ | ´hidden´ | ´select´) Renders hidden inputs within tags or a select element for form compatibility.
-´HTMLTagName´            | ´'tags'´    | Name property for the rendered HTML tag.
-´customValueName´        | ´'custom'´  | Same as above, for the custom value HTML tag.
-´fullList´               | ´false´     | If ´true´, it takes ´source´ value. If string, expects a URL that returns the full JSON tags array.
-´showAddButton´          | ´false´     | Show an *add tag* button.
-´delay´                  | ´250´       | Typing delay for the search input.
-´placeholder´            | ´null´      | Placeholder for the search input.
-´customValuePlaceholder´ | ´null´      | Placeholder for the custom value input.
-´highlightColor´         | ´'#f33'´    | Existing tags highlighting color. If ´false´, no highlighting is called.
-´beforeAddTag´           | ´null´      | Called before adding a tag. Returning ´false´ will cancel the addition.
-´onTagAdded´             | ´null´      | Called when tag has been already added.
-´onTagDeleted´           | ´null´      | Called when a tag has been deleted.
-´onLimitReached´         | ´null´      | Called when limit is reached.
+`source`                 | `null`      | Maps to JQuery Autocomplete UI source option.
+`limit`                  | `0`         | Max number of tags.
+`customValue`            | `false`     | If `true`, a custom value input field is activated and custom values are shown in tags.
+`initialTags`            | `[]`        | Initial array of tags. You can use public `tag` method to format.
+`renderHTMLTag`          | `false`     | (`false` | `hidden` | `select`) Renders hidden inputs within tags or a select element for form compatibility.
+`HTMLTagName`            | `'tags'`    | Name property for the rendered HTML tag.
+`customValueName`        | `'custom'`  | Same as above, for the custom value HTML tag.
+`fullList`               | `false`     | If `true`, it takes `source` value. If string, expects a URL that returns the full JSON tags array.
+`showAddButton`          | `false`     | Show an *add tag* button.
+`delay`                  | `250`       | Typing delay for the search input.
+`placeholder`            | `null`      | Placeholder for the search input.
+`customValuePlaceholder` | `null`      | Placeholder for the custom value input.
+`highlightColor`         | `'#f33'`    | Existing tags highlighting color. If `false`, no highlighting is called.
+`beforeAddTag`           | `null`      | Called before adding a tag. Returning `false` will cancel the addition.
+`onTagAdded`             | `null`      | Called when tag has been already added.
+`onTagDeleted`           | `null`      | Called when a tag has been deleted.
+`onLimitReached`         | `null`      | Called when limit is reached.
 
 
 ### Basic usage
@@ -73,9 +73,9 @@ The most basic way of get Listag working is:
 		source: 'source.json'
 	});
 
-This will create the search input and add existing ´li´ child elements as tags. ´source´ is the only option required, as it maps directly to the autocomplete plugin. It can be an array with local data, a string specifying a URL or a callback ([read the official docs](http://jqueryui.com/demos/autocomplete/)).
+This will create the search input and add existing `li` child elements as tags. `source` is the only option required, as it maps directly to the autocomplete plugin. It can be an array with local data, a string specifying a URL or a callback ([read the official docs](http://jqueryui.com/demos/autocomplete/)).
 
-Existing ´li´ elements will be added as tags. Their text will be used as labels, and (if present) HTML5 data attributes ´data-value´ and ´data-custom-value´ (last one is only necessary if custom value option is true) will become, respectively, ´value´ and ´customValue´ properties of each tag.
+Existing `li` elements will be added as tags. Their text will be used as labels, and (if present) HTML5 data attributes `data-value` and `data-custom-value` (last one is only necessary if custom value option is true) will become, respectively, `value` and `customValue` properties of each tag.
 
 
 ### Form friendliness
@@ -88,10 +88,10 @@ In order to use Listag within regular forms and allow tags submission, you can t
 		HTMLTagName:   'mytagarray'
 	});
 
-This will render a hidden ´<select name="mytagarray">´ that will store each tag as an ´<option value="">´ element.
-Optionally, you can set ´renderHTMLTag´ as ´hidden´ and a ´<input type="hidden" name="mytagarray[]" value="">´ will be rendered within each tag. 
+This will render a hidden `<select name="mytagarray">` that will store each tag as an `<option value="">` element.
+Optionally, you can set `renderHTMLTag` as `hidden` and a `<input type="hidden" name="mytagarray[]" value="">` will be rendered within each tag. 
 
-Note that ´HTMLTagName´ will become the name attribute in both cases. For the hidden inputs case, though, ´[]´ will be concatenated to it **except** if the ´limit´ option is setted to 1.
+Note that `HTMLTagName` will become the name attribute in both cases. For the hidden inputs case, though, `[]` will be concatenated to it **except** if the `limit` option is setted to 1.
 
 
 ### Custom values
@@ -110,7 +110,7 @@ In case you need to give the user the ability to specify a custom value, you can
 
 This time, a custom value input will be added next to the searching input and the tags will show that value next to the label. Also, tags will have an *edit* button which will let the user modify it.
 
-If the ´renderHTMLTag´ options is set to ´hidden´, an aditional ´<input type="hidden" name="quantity[]" value="">´ will be added to each tag. If it is set to ´select´, the ´<option>´ elements will have an HTML5 ´data-custom-value´ attribute containing the custom value.
+If the `renderHTMLTag` options is set to `hidden`, an aditional `<input type="hidden" name="quantity[]" value="">` will be added to each tag. If it is set to `select`, the `<option>` elements will have an HTML5 `data-custom-value` attribute containing the custom value.
 
 
 ### Showing all tag possibilities *(beta)*
@@ -126,12 +126,12 @@ If the autocomplete pattern isn't user-friendly enough (e.g. you've got a big li
 		fullList:      'showalltheitems.json'
 	});
 
-Giving the ´fullList´ option a string, it will become the URL that must return a (full) *properly formatted* array of tags, and a *show full list* button will be added next to the search. This button will open a fancybox containing all the tags, which will be added by clicking on them.
+Giving the `fullList` option a string, it will become the URL that must return a (full) *properly formatted* array of tags, and a *show full list* button will be added next to the search. This button will open a fancybox containing all the tags, which will be added by clicking on them.
 
 
 ### Tags array format
 
-The format expected from the ´source´, ´fullList´ and ´initialTags´ options is a simple JSON array encoding:
+The format expected from the `source`, `fullList` and `initialTags` options is a simple JSON array encoding:
 
 	[
 		{
@@ -144,9 +144,9 @@ The format expected from the ´source´, ´fullList´ and ´initialTags´ option
 		}
 	]
 
-´value´ is intended to be used as *id* for each tag, e.g. when adding products and having to process them later filtering by id. ´customValue´, if defined, will become the default value for that tag and will be shown in the custom tag input (if ´customValue: true´) when the user selects the tag, before adding it.
+`value` is intended to be used as *id* for each tag, e.g. when adding products and having to process them later filtering by id. `customValue`, if defined, will become the default value for that tag and will be shown in the custom tag input (if `customValue: true`) when the user selects the tag, before adding it.
 
-You can use the public ´tag´ method for formatting purposes:
+You can use the public `tag` method for formatting purposes:
 
 	var tag = $.jito.listag.tag(label, value, customValue);
 
@@ -155,29 +155,29 @@ You can use the public ´tag´ method for formatting purposes:
 
 ### Extra options and callbacks
 
-´placeholder´ and ´customValuePlaceholder´  
+`placeholder` and `customValuePlaceholder`  
 For a better user experience, you can set placeholders on the search and custom value inputs, to give the user a hint of the expected content or behavior.
 
-´showAddButton´  
-When ´true´, an *Add tag* button will be rendered next to search and custom value inputs. ´Enter´ keydown behavior (i.e. add a tag) is not overrided, both will do the same job.
+`showAddButton`  
+When `true`, an *Add tag* button will be rendered next to search and custom value inputs. `Enter` keydown behavior (i.e. add a tag) is not overrided, both will do the same job.
 
-´delay´  
+`delay`  
 Maps to the autocomplete delay option. This is the time in ms between the last key stroke and the begining of the search.
 
-´highlightColor´  
-The color used for background highlighting effect when the user tries to add a tag that already exists. If ´false´, no highlight will be applied (though this is not recommended -you should always give the user some feedback).
+`highlightColor`  
+The color used for background highlighting effect when the user tries to add a tag that already exists. If `false`, no highlight will be applied (though this is not recommended -you should always give the user some feedback).
 
 
 #### Callbacks
 
-´beforeAddTag´  
-It expects a ´function(event, tag)´ where ´event´ is an empty event and ´tag´ is the JSON formatted tag object. Returning ´false´ will abort the tag addition method.
+`beforeAddTag`  
+It expects a `function(event, tag)` where `event` is an empty event and `tag` is the JSON formatted tag object. Returning `false` will abort the tag addition method.
 
-´onTagAdded´  
-Same format as above, but triggered when the tag has already been added. You can access the ´label´, ´value´ and ´customValue´ properties as usual, plus an ´element´ one, which is the DOM tag element inserted in the list.
+`onTagAdded`  
+Same format as above, but triggered when the tag has already been added. You can access the `label`, `value` and `customValue` properties as usual, plus an `element` one, which is the DOM tag element inserted in the list.
 
-´onTagDeleted´  
+`onTagDeleted`  
 Will be fired after a tag is removed. It does not takes any arguments.
 
-´onLimitReached´  
-It is fired after the user tries to add a tag, before the addition itself, and after the ´beforeAddTag´ method. Useful to give the user some feedback about what happened.
+`onLimitReached`  
+It is fired after the user tries to add a tag, before the addition itself, and after the `beforeAddTag` method. Useful to give the user some feedback about what happened.
