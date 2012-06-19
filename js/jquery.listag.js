@@ -17,14 +17,18 @@
       showAddButton         : false,      // Show an 'add tag' button.
 
       delay                 : 250,        // Typing delay for the search input.
-      placeholder           : null,       // Placeholder for the search input.
+      placeholder           : 'Search...',// Placeholder for the search input.
       customValuePlaceholder: null,       // Placeholder for the custom value input.
       highlightColor        : '#f33',     // Existing tags highlighting color. If false, no highlighting is called.
+
+      addButtonHTML         : 'Add tag',
+      fullListButtonHTML    : 'Show full list',
 
 
       // Callbacks
       beforeAddTag          : null,       // function(event, tag). Returning 'false' will cancel the addition of the current tag.
       onTagAdded            : null,       // Called when tag has been already added.
+      onTagUpdated          : null,       // Called after the tag is updated.
       onTagDeleted          : null,       // Called when a tag has been deleted.
       onLimitReached        : null        // Called after a tag is added, if the limit is reached.
     },
@@ -48,10 +52,12 @@
 
       
       // Create input container
-      this._listagNewLi = $('<li class="listag-new"></li>');
+      this._listagNewLi = $('<li></li>').addClass('listag-new');
       
       // Create input element
-      this.input = $('<input type="text" class="listag-input">').appendTo(this._listagNewLi);
+      this.input = $('<input type="text">')
+      .addClass('listag-input')
+      .appendTo(this._listagNewLi);
       if (opts.placeholder) {
         this.input.attr('placeholder', opts.placeholder);
       }
@@ -80,7 +86,7 @@
         }
       })
       .keydown(function(e){
-        if (e.keyCode == 13){
+        if (e.keyCode == 13 || e.keyCode == 9){
           // Prevent form submit
           e.preventDefault();
         }
@@ -88,15 +94,17 @@
 
       // Create custom value input
       if (opts.customValue) {
-        this.customValueInput = $('<input type="text" class="listag-customvalueinput">')
+        this.customValueInput = $('<input type="text">')
+          .addClass('listag-customvalueinput')
           .keydown(function(e){
             if (e.keyCode == 13){
               e.preventDefault();
 
               if (self.tempTag) {
                 self.tempTag.customValue = $(this).val();
-                self.addTag(self.tempTag);
                 self.clear();
+                self.input.focus();
+                self.addTag(self.tempTag);
               };
             }
           })
@@ -109,16 +117,18 @@
 
       // Create 'full list' button only if fancybox plugin is loaded
       if (opts.fullList && $.fancybox) {
-        $('<input type="button" class="listag-full-btn" value="Show full list">')
-        /*.click(function(){
+        $('<a class="listag-full-btn"></a>')
+        .html(opts.fullListButtonHTML)
+        .click(function(){
           self.showFullList();
-        })*/
+        })
         .appendTo(this._listagNewLi);
       }
 
       // Create 'add' button
       if (opts.showAddButton) {
-        $('<input type="button" class="listag-add-btn" value="Add tag">')
+        $('<a class="listag-add-btn"></a>')
+        .html(opts.addButtonHTML)
         .click(function(){
           if (self.tempTag) {
             self.tempTag.customValue = self.customValueInput.val();
@@ -142,7 +152,7 @@
       // Add initial tags
       if (opts.initialTags.length > 0) {
         $(opts.initialTags).each(function (i, tag) {
-          self._addTag(tag);
+          self.addTag(tag);
         });
       }
     },
@@ -152,15 +162,12 @@
 
       if (!hlcolor) { return false };
       
-      var initialColor = tag.element.css('background-color');
-      tag.element.animate({'background-color':hlcolor}, 100).animate({'background-color':initialColor}, 800);
+      if ($.effects) {
+        $('.inner', tag.element).effect('highlight', {color: hlcolor}, 1000);
+      }
     },
 
-    /**
-     * Checks if the passed value matches any existing tag's value
-     * @param  {string} value Value to check
-     * @return {object}       Matching tag object
-     */
+    // Checks if the passed value matches any existing tag's value 
     exists: function(value) {
       if (this.tagsArray.length == 0) { return false };
       
@@ -238,37 +245,35 @@
       self = this;
 
       // Generate tag element and childs
-      tag.element = $('<li class="listag-tag"></li>');
+      tag.element = $('<li class="listag-tag"><div class="inner"></div></li>');
+
+      var inner = $('.inner', tag.element);
 
       // Label
-      $('<span class="listag-label">' + tag.label + '</span>').appendTo(tag.element);
+      $('<span class="listag-label">' + tag.label + '</span>').appendTo(inner);
 
       // Custom value span
       if (this.options.customValue) {
-        $('<span class="listag-customvalue">' + tag.customValue + '</span>').appendTo(tag.element);
+        $('<span class="listag-customvalue"><span>' + tag.customValue + '</span></span>').appendTo(inner);
       };
 
       // Generate hidden inputs
       if (this.options.renderHTMLTag == 'hidden') {
         var _hiddenInputName = (this.options.limit == 1 ? this.options.HTMLTagName : this.options.HTMLTagName + '[]');
 
-        $('<input type="hidden" style="display:none;" value="' + tag.value + '" name="' + _hiddenInputName + '" />').appendTo(tag.element);
+        $('<input type="hidden" style="display:none;" value="' + tag.value + '" name="' + _hiddenInputName + '" />').appendTo(inner);
 
         if (this.options.customValue) {
           var _customInputName = (this.options.limit == 1 ? this.options.customValueName : this.options.customValueName + '[]');
 
-          $('<input type="hidden" style="display:none;" value="' + tag.customValue + '" name="' + _customInputName + '" />').appendTo(tag.element);
+          $('<input type="hidden" style="display:none;" value="' + tag.customValue + '" name="' + _customInputName + '" />').appendTo(inner);
         }
       };
 
 
       // Actions span
-      var _actions = $('<span class="listag-actions"></span>').appendTo(tag.element);
+      var _actions = $('<span class="listag-actions"></span>').appendTo(inner);
       
-      $('<a class="listag-remove" title="Remove tag">X</a>').click(function(e){
-        self.removeTag(tag);
-      }).appendTo(_actions);
-
       if (this.options.customValue){
           $('<a class="listag-edit" title="Edit custom value">E</a>')
           .click(function(e){
@@ -277,6 +282,10 @@
           .appendTo(_actions);
       }
       
+      $('<a class="listag-remove" title="Remove tag">X</a>').click(function(e){
+        self.removeTag(tag);
+      }).appendTo(_actions);
+
       // Instert tag into tags array and DOM
       tag.element.insertBefore(this.input.parent());
       this.tagsArray.push(tag);
@@ -324,13 +333,15 @@
       tag.customValue = value;
       
       tag.element
-        .find('.listag-customvalue').html(value).end()
+        .find('.listag-customvalue').html('<span>' + value + '</span>').end()
         .find('input:hidden[name="' + self.options.customValueName + '"]').val(value);
 
       if (this.select) {
         $('option:eq(' + tag.index + ')', this.select).attr('customValue', value);
         this.select.change();
       }
+
+      this._trigger('onTagUpdated', null, tag);
     },
 
     showFullList: function(){
@@ -367,14 +378,14 @@
       $.fancybox({
         title   : 'Full list',
         content : list,
-        type    : inline,
+        type    : 'inline',
         wrapCSS : 'listag-fancybox'
       });
     },
 
     editCustomValue: function(tag){
       var self = this,
-          currentVal = $('.listag-customvalue', tag.element).text(),
+          currentVal = $('.listag-customvalue span', tag.element).text(),
           saveNewValueAndExit = function(newValue){
             tag.element.removeClass('editing');
             self.updateCustomValue(tag, newValue);
@@ -397,6 +408,10 @@
       )
       .children('input').select();
 
+    },
+
+    tags: function() {
+      return this.tagsArray;
     }
 
   })

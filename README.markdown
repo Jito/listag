@@ -10,11 +10,12 @@ Features
 
 - Simple basic usage.
 - Fully integrated with JQuery UI Autocomplete widget.
-- Form friendliness, with custom name attributes for the created elements.
+- Form friendliness! Toggle usage of hidden inputs with custom name attributes.
 - Possibility of adding a custom value to each tag for further customization.
 - Visual cues like placeholders, highlighting existing tags, and buttons to add a tag and show full list of tags.
 - Integration with Fancybox 2 plugin for showing all the posible tags in a modal window.
 - Convenient callbacks.
+- Ability to provide *initial tags* on creation via list items or options.
 
 #### TODO:
 
@@ -22,7 +23,7 @@ Features
 - Extend the `fullList` option to accept local arrays and callbacks.
 
 
-Instalation
+Installation
 -----------
 
 1. Include the files in your `head`:
@@ -44,25 +45,28 @@ Usage
 
 ### Full options list
 
-Option 	                 | Default     | Description
-:------------------------|:------------|:-----------
-`source`                 | `null`      | Maps to JQuery Autocomplete UI source option.
-`limit`                  | `0`         | Max number of tags.
-`customValue`            | `false`     | If `true`, a custom value input field is activated and custom values are shown in tags.
-`initialTags`            | `[]`        | Initial array of tags. You can use public `tag` method to format.
-`renderHTMLTag`          | `false`     | (`false` | `hidden` | `select`) Renders hidden inputs within tags or a select element for form compatibility.
-`HTMLTagName`            | `'tags'`    | Name property for the rendered HTML tag.
-`customValueName`        | `'custom'`  | Same as above, for the custom value HTML tag.
-`fullList`               | `false`     | If `true`, it takes `source` value. If string, expects a URL that returns the full JSON tags array.
-`showAddButton`          | `false`     | Show an *add tag* button.
-`delay`                  | `250`       | Typing delay for the search input.
-`placeholder`            | `null`      | Placeholder for the search input.
-`customValuePlaceholder` | `null`      | Placeholder for the custom value input.
-`highlightColor`         | `'#f33'`    | Existing tags highlighting color. If `false`, no highlighting is called.
-`beforeAddTag`           | `null`      | Called before adding a tag. Returning `false` will cancel the addition.
-`onTagAdded`             | `null`      | Called when tag has been already added.
-`onTagDeleted`           | `null`      | Called when a tag has been deleted.
-`onLimitReached`         | `null`      | Called when limit is reached.
+Option 	                 | Default            | Description
+:------------------------|:-------------------|:-------------------------------------
+`source`                 | `null`             | Maps to JQuery Autocomplete UI source option.
+`limit`                  | `0`                | Max number of tags.
+`customValue`            | `false`            | If `true`, a custom value input field is activated and custom values are shown in tags.
+`initialTags`            | `[]`               | Initial array of tags. You can use public `tag` method to format.
+`renderHTMLTag`          | `false`            | (`false` | `hidden` | `select`) Renders hidden inputs within tags or a select element for form compatibility.
+`HTMLTagName`            | `'tags'`           | Name property for the rendered HTML tag.
+`customValueName`        | `'custom'`         | Same as above, for the custom value HTML tag.
+`fullList`               | `false`            | If `true`, it takes `source` value. If string, expects a URL that returns the full JSON tags array.
+`showAddButton`          | `false`            | Show an *add tag* button.
+`delay`                  | `250`              | Typing delay for the search input.
+`placeholder`            | `'Search...'`      | Placeholder for the search input.
+`customValuePlaceholder` | `null`             | Placeholder for the custom value input.
+`highlightColor`         | `'#f33'`           | Existing tags highlighting color. If `false`, no highlighting is called.
+`addButtonHTML`          | `'Add tag'`        |
+`fullListButtonHTML`     | `'Show full list'` |
+`beforeAddTag`           | `null`             | Called before adding a tag. Returning `false` will cancel the addition.
+`onTagAdded`             | `null`             | Called when tag has been already added.
+`onTagUpdated`           | `null`             | Called after the tag is updated.
+`onTagDeleted`           | `null`             | Called when a tag has been deleted.
+`onLimitReached`         | `null`             | Called when limit is reached.
 
 
 ### Basic usage
@@ -153,7 +157,25 @@ You can use the public `tag` method for formatting purposes:
 	customarray.push(tag);
 
 
-### Extra options and callbacks
+### Callbacks
+
+`beforeAddTag`  
+It expects a `function(event, tag)` where `event` is an empty event and `tag` is the JSON formatted tag object. Returning `false` will abort the tag addition method.
+
+`onTagAdded`  
+Same format as above, but triggered when the tag has already been added. You can access the `label`, `value` and `customValue` properties as usual, plus an `element` one, which is the DOM tag element inserted in the list.
+
+`onTagDeleted`  
+Will be fired after a tag is removed. It does not takes any arguments.
+
+`onTagUpdated`
+A `function(event, tag)`, similar to `beforeAddTag`, fired once the editable tag has been updated.
+
+`onLimitReached`  
+It is fired after the user tries to add a tag, before the addition itself, and after the `beforeAddTag` method. Useful to give the user some feedback about what happened.
+
+
+### Extra options
 
 `placeholder` and `customValuePlaceholder`  
 For a better user experience, you can set placeholders on the search and custom value inputs, to give the user a hint of the expected content or behavior.
@@ -167,17 +189,14 @@ Maps to the autocomplete delay option. This is the time in ms between the last k
 `highlightColor`  
 The color used for background highlighting effect when the user tries to add a tag that already exists. If `false`, no highlight will be applied (though this is not recommended -you should always give the user some feedback).
 
+`addButtonHTML` and `fullListButtonHTML`  
+For i18n purposes.
 
-#### Callbacks
 
-`beforeAddTag`  
-It expects a `function(event, tag)` where `event` is an empty event and `tag` is the JSON formatted tag object. Returning `false` will abort the tag addition method.
 
-`onTagAdded`  
-Same format as above, but triggered when the tag has already been added. You can access the `label`, `value` and `customValue` properties as usual, plus an `element` one, which is the DOM tag element inserted in the list.
+-------------------------------------------------
 
-`onTagDeleted`  
-Will be fired after a tag is removed. It does not takes any arguments.
 
-`onLimitReached`  
-It is fired after the user tries to add a tag, before the addition itself, and after the `beforeAddTag` method. Useful to give the user some feedback about what happened.
+
+![CC BY-SA 3.0](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)
+This widget is based on [jQuery Tagit](https://github.com/hailwood/jQuery-Tagit) by Matthew Hailwood, and licensed under a Creative Commons [Attribution-ShareAlike 3.0 Unported license](http://creativecommons.org/licenses/by-sa/3.0/).

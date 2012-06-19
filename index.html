@@ -12,17 +12,11 @@
 </head>
 <body>
     <ul id="listag">
-      <!-- <li>
-        ActionScript
-        <input type="hidden" value="ActionScript">
-      </li>
-      <li>
-        Haskell
-        <input type="hidden" value="Haskell">
-      </li> -->
+      <li data-value="1" data-custom-value="abc">ActionScript</li>
+      <li data-value="2" data-custom-value="22">AppleScript</li>
     </ul>
-  <script src="js/jquery-1.7.2.min.js"></script>
-  <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
   <script src="js/jquery.fancybox.pack.js"></script>
   <script src="js/jquery.listag.js"></script>
   <script src="js/less-1.3.0.min.js"></script>
@@ -30,13 +24,54 @@
   
   $(document).ready(function(){
 
+    var array = [{
+                    label: "ActionScript",
+                    value: 1,
+                    customValue: null
+                  },{
+                    label: "AppleScript",
+                    value: 2,
+                    customValue: 22
+                  },{
+                    label: "Asp",
+                    value: 3,
+                    customValue: "string"
+                  },{
+                    label: "BASIC",
+                    value: 4,
+                    customValue: true
+                  },{
+                    label: "C",
+                    value: 5,
+                    customValue: null
+                  },{
+                    label: "C++",
+                    value: 6,
+                    customValue: null
+                  },{
+                    label: "Clojure",
+                    value: 7,
+                    customValue: 77
+                  },{
+                    label: "COBOL",
+                    value: 8,
+                    customValue: "string"
+                  },{
+                    label: "ColdFusion", 
+                    value: 9, 
+                    customValue: "35"
+                  }];
+
     $('#listag').listag({
-      source:       'source.json',
+      source:       array,
       placeholder:  "Buscar...",
-      customValuePlaceholder: "Cantidad",
+      customValuePlaceholder: "Cant.",
       customValue: true,
       fullList: true,
-      showAddButton: true
+      showAddButton: true,
+      fullListButtonHTML: 'Ver todos',
+      addButtonHTML: 'Agregar',
+      renderHTMLTag: 'select'
     });
 
   });
